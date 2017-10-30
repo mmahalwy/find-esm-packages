@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = function(
-  { dirname = __dirname, checks = ['dependencies'], paths = false } = {}
+  { dirname = process.cwd(), checks = ['dependencies'], paths = false } = {}
 ) {
   const esmPackages = [];
   const rootPackage = JSON.parse(
