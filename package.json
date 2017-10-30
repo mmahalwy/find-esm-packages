@@ -1,0 +1,26 @@
+{
+  "name": "find-esm-packages",
+  "version": "1.0.0",
+  "description": "Find packages with 'module' in their package.json",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mohamed El Mahallawy",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmahalwy/find-esm-packages.git"
+  },
+  "keywords": [
+    "tree",
+    "shaking",
+    "webpack",
+    "esm",
+    "rollup"
+  ],
+  "bugs": {
+    "url": "https://github.com/mmahalwy/find-esm-packages/issues"
+  },
+  "homepage": "https://github.com/mmahalwy/find-esm-packages#readme"
+}
