@@ -1,40 +1,40 @@
 const fs = require('fs');
+const path = require('path');
 
-const CHECK_DEPENDENCIES = true;
-const CHECK_DEV_DEPENDENCIES = false;
-const CHECK_PEER_DEPENDENCIES = false;
-
-module.exports = function ({
-  checkDependencies = CHECK_DEPENDENCIES,
-  checkDevDependencies = CHECK_DEV_DEPENDENCIES,
-  checkPeerDependencies = CHECK_PEER_DEPENDENCIES
-} = {}) {
+module.exports = function(
+  { dirname = __dirname, checks = ['dependencies'], paths = false } = {}
+) {
   const esmPackages = [];
-  const checks = [];
-  const rootPackage = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+  const rootPackage = JSON.parse(
+    fs.readFileSync(path.join(dirname, './package.json'), 'utf8')
+  );
 
-  if (checkDependencies) {
-    checks.push(rootPackage.dependencies);
-  }
+  checks.forEach(check => {
+    if (!rootPackage[check]) {
+      throw new Error(`Missing ${check} in package.json`);
+    }
 
-  if (checkDevDependencies) {
-    checks.push(rootPackage.devDependencies);
-  }
-
-  if (checkPeerDependencies) {
-    checks.push(rootPackage.checkPeerDependencies);
-  }
-
-
-  checks.forEach((type) => {
-    Object.keys(type).forEach((dependency) => {
-      const dependencyPackage = JSON.parse(fs.readFileSync(`./node_modules/${dependency}/package.json`, 'utf8'));
+    Object.keys(rootPackage[check]).forEach(dependency => {
+      const dependencyPackage = JSON.parse(
+        fs.readFileSync(
+          path.join(dirname, `./node_modules/${dependency}/package.json`),
+          'utf8'
+        )
+      );
 
       if (dependencyPackage.module) {
-        esmPackages.push(dependency);
+        if (paths) {
+          esmPackages.push({
+            name: dependency,
+            main: `${dependency}/${dependencyPackage.main}`,
+            module: `${dependency}/${dependencyPackage.module}`,
+          });
+        } else {
+          esmPackages.push(dependency);
+        }
       }
     });
   });
 
   return esmPackages;
-}
+};

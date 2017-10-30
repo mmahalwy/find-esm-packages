@@ -4,7 +4,7 @@
   "description": "Find packages with 'module' in their package.json",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Mohamed El Mahallawy",
   "license": "ISC",
@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/mmahalwy/find-esm-packages/issues"
   },
-  "homepage": "https://github.com/mmahalwy/find-esm-packages#readme"
+  "homepage": "https://github.com/mmahalwy/find-esm-packages#readme",
+  "devDependencies": {
+    "jest": "^21.2.1"
+  }
 }
